@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  neo4j:
+    image: neo4j:5.6.0-community
+    mem_limit: 8GB
+    ports:
+      - 7888:7474
+      - 7999:7687
+    restart: unless-stopped
+    environment:
+      - NEO4J_AUTH=neo4j/password
+      - NEO4J_PLUGINS=["apoc"]
+    volumes:
+      - ./db/data:/data
+      - ./db/conf:/conf
+      - ./db/logs:/logs
+      - ./db/plugins:/plugins
+      - ./db/import:/import
+
+  neo4j-gtfsr:
+    image: neo4j:5.6.0-community
+    mem_limit: 2G
+    ports:
+      - 7777:7474
+      - 7666:7687
+    restart: unless-stopped
+    environment:
+      - NEO4J_AUTH=neo4j/password
+      - NEO4J_PLUGINS=["apoc"]
+    volumes:
+      - ./db-gtfsr/data:/data@
+      - ./db-gtfsr/conf:/conf
+      - ./db-gtfsr/logs:/logs
+      - ./db-gtfsr/import:/import
+      - ./db-gtfsr/plugins:/plugins

@@ -1,0 +1,40 @@
+{
+  "savepath": "./db/import/",
+  "agencies": [
+    {
+      "agency": "Luas",
+      "url": "https://www.transportforireland.ie/transitData/Data/GTFS_LUAS.zip",
+      "omitted": [],
+      "fileSwaps": [
+        {
+          "file": "transfers.txt",
+          "url": "https://transitfeeds.com/p/transport-for-ireland/1045/latest/download/transfers.txt"
+        }
+      ]
+    },
+
+    {
+      "agency": "GoAhead",
+      "url": "https://www.transportforireland.ie/transitData/Data/GTFS_GoAhead.zip",
+      "omitted": [],
+      "omittedSubAgency": ["Go-Ahead Ireland", "Go-Ahead Kildare Commuter"],
+      "fileSwaps": [
+        {
+          "file": "transfers.txt",
+          "url": "https://transitfeeds.com/p/transport-for-ireland/1044/latest/download/transfers.txt"
+        }
+      ]
+    },
+    {
+      "agency": "DublinBus",
+      "url": "https://www.transportforireland.ie/transitData/Data/GTFS_Dublin_Bus.zip",
+      "omitted": [],
+      "fileSwaps": [
+        {
+          "file": "transfers.txt",
+          "url": "https://transitfeeds.com/p/transport-for-ireland/782/latest/download/transfers.txt"
+        }
+      ]
+    }
+  ]
+}

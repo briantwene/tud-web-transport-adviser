@@ -60,6 +60,7 @@ exports.getRoutesWithRealtimeV2 = async (origin, destination) => {
     for (const path of paths) {
       const combined = {};
       const routeNodes = [];
+      const shapePath = await db.getTripShape(path.trip.properties.id);
       //
       combined.route = path.route.properties;
       combined.agency = path.agency.properties;
@@ -68,6 +69,7 @@ exports.getRoutesWithRealtimeV2 = async (origin, destination) => {
       combined.startStopTime = path.startStopTime.properties;
       combined.endStopTime = path.endStopTime.properties;
       combined.trip = path.trip.properties;
+      combined.mapPath = shapePath;
       path.pathNodes;
       path.stops;
 

@@ -1,0 +1,3 @@
+[submodule "client"]
+	path = client
+	url = https://github.com/bt521/tud-web-transport-adviser-ui

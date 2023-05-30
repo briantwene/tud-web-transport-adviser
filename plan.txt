@@ -1,0 +1,18 @@
+- Refactor to antd
+
+Fix shapes
+    - could create a new directory for shapes
+    - could query shapes on demand: based on the trips involved and from the stops 
+    - would make it easier to debug and reduce the payload probably
+    - send the trip id if the shape
+    - combined with the bus then
+    - could then on the frontend make swrHook for it
+Fix anything else on the backend - 1hr
+    - error handling - done
+    - logging - done
+    - figuring out the direction for luas - done
+Fix anything left on the database
+
+frontend prefreences form control working
+
+but need to fix how they get added to the map

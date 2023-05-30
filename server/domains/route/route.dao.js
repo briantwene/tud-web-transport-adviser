@@ -66,8 +66,8 @@ class RouteDAO {
         MATCH (pathNode)-[:AT]->(stop:Stop)
         
         
-        RETURN start, s_st as startStopTime, startStop, end, e_st as endStopTime, endStop, trip, service, pathNodes, collect(stop) AS stops, route, agency
-        LIMIT 3
+        RETURN start, s_st as startStopTime, startStop, end, e_st as endStopTime, endStop, trip, service, pathNodes, collect(stop) AS stops, route, agency ORDER BY s_st.departure_time
+      
         
       `,
         {
@@ -76,7 +76,7 @@ class RouteDAO {
           currentTime: getCurrentTimestamp()
         }
       );
-      console.log("res", response);
+      //console.log("res", response);
       return response;
     } catch (error) {
       console.log(error);
@@ -89,7 +89,7 @@ class RouteDAO {
       const res = await readRealtime(
         `MATCH (st1:StopTime {tripUpdateId: $trip_id, stopId: $start_stop})
             MATCH (st2:StopTime {tripUpdateId: $trip_id, stopId: $end_stop})
-            RETURN st1.departureDelay, st2.arrivalDelay`,
+            RETURN st1.departureDelay as startRealtime, st2.arrivalDelay as endRealtime`,
         { trip_id: tripId, start_stop: start, end_stop: end }
       );
       return res;
@@ -103,7 +103,7 @@ class RouteDAO {
     try {
       const response = await read(
         `MATCH (t:Trip {id: $trip_id})-[:HAS_SHAPE]->(s:Shape)-[ps:HAS_POINT]->(p)
-              RETURN p.lat, p.lon order by ps.seq`,
+              RETURN p.lat as lat, p.lon as lon order by ps.seq`,
         { trip_id: tripId }
       );
       return response;

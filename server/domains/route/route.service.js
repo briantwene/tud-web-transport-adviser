@@ -56,21 +56,41 @@ exports.getRoutesWithRealtimeV2 = async (origin, destination) => {
   console.log(origin, destination);
 
   try {
-    const paths = await db.getRoutesFromDBV2(origin, destination);
+   
+    const paths = await db
+      .getRoutesFromDBV2(origin, destination)
+      .then((paths) => paths.slice(0, 5));
+
+    //console.log(paths);
     for (const path of paths) {
       const combined = {};
       const routeNodes = [];
-      const shapePath = await db.getTripShape(path.trip.properties.id);
+      console.log("paths", path.properties);
+      const shapePath = await db
+        .getTripShape(path.trip.properties.id)
+        .then((shapes) => shapes.map((shape) => [shape.lat, shape.lon]));
+
+      const realtime = await db.getTripUpdatesFromDB(
+        path.trip.properties.id,
+        path.startStop.properties.id,
+        path.endStop.properties.id
+      );
+
+      console.log("realtime", realtime);
+
       //
       combined.route = path.route.properties;
       combined.agency = path.agency.properties;
       combined.startStop = path.startStop.properties;
-      combined.endStop = path.startStop.properties;
+      combined.endStop = path.endStop.properties;
       combined.startStopTime = path.startStopTime.properties;
       combined.endStopTime = path.endStopTime.properties;
       combined.trip = path.trip.properties;
       combined.mapPath = shapePath;
-      path.pathNodes;
+      combined.realStart =
+        (realtime && realtime[0] && realtime[0].startRealtime.high) ?? null;
+      combined.realEnd =
+        (realtime && realtime[0] && realtime[0].endRealtime.high) ?? null;
       path.stops;
 
       //combine the stops with the stoptimes
@@ -90,7 +110,10 @@ exports.getRoutesWithRealtimeV2 = async (origin, destination) => {
         });
       }
 
-      combined.routeNodes = routeNodes;
+      combined.routeNodes = routeNodes.filter(
+        (node, index, self) =>
+          index === self.findIndex((stop) => stop.id === node.id)
+      );
 
       routes.push(combined);
     }

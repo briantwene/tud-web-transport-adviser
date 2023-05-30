@@ -18,9 +18,12 @@ const changeUptime = (timeString) => {
 };
 
 const timeStringFixer = (dirtyCSV) => {
+
   let stoptimeDataframe = readCSV(dirtyCSV, {
     encoding: "utf8"
   });
+
+  console.log(stoptimeDataframe)
 
   //get the rows and map over them
 

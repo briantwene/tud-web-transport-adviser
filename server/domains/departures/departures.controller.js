@@ -1,6 +1,7 @@
 const { HTTP404Error, HTTP400Error } = require("../../lib/errors/customErrors");
 const { logError } = require("../../lib/errors/errorHandler");
 const httpStatusCodes = require("../../lib/errors/httpStatusCode");
+const { getTransportAtStop } = require("./departures.service");
 
 exports.transport_byStop = async (req, res, next) => {
   const { stop_id } = req.query;
@@ -9,8 +10,8 @@ exports.transport_byStop = async (req, res, next) => {
     if (stop_id === "" || stop_id === undefined) {
       throw new HTTP400Error(`Invalid Stop ID supplied.`);
     }
-    const result = await getTransportByStop(stop_id);
-    if (result === null) {
+    const result = await getTransportAtStop(stop_id);
+    if (!result) {
       throw new HTTP404Error(`Departures with Stop ID: ${stop_id} not found.`);
     }
     return res.status(httpStatusCodes.OK).json(result);

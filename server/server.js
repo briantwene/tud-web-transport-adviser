@@ -8,6 +8,7 @@ const { isOperationalError } = require("./lib/errors/errorHandler");
 
 const app = express();
 const port = process.env.PORT || 3443;
+process.env.NODE_ENV = "production";
 app.use(cors());
 
 app.get("/", (req, res) => {

@@ -1,6 +1,7 @@
 function getCurrentTimestamp() {
   const nowDate = new Date()
-  const justTime = nowDate.toTimeString().split(' ')[0].replace(/^0/, '')
+  const justTime = nowDate.toTimeString().split(" ")[0];
+  console.log(justTime);
   return justTime
 }
 

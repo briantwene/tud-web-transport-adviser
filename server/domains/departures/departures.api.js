@@ -1,9 +1,9 @@
 const express = require("express");
 const { transport_byStop } = require("./departures.controller");
 
-const transportAPI = express.Router();
+const departuresAPI = express.Router();
 
-transportAPI.get("/byStop", transport_byStop);
-transportAPI.get("/byStopMulti");
+departuresAPI.get("/byStop", transport_byStop);
+departuresAPI.get("/byStopMulti");
 
-module.exports = transportAPI;
+module.exports = departuresAPI;

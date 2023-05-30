@@ -6,7 +6,8 @@ const {
   mkdir,
   opendir,
   readdir,
-  rename
+  rename,
+  readFile
 } = require("node:fs/promises");
 const { existsSync } = require("node:fs");
 const { default: axios } = require("axios");
@@ -122,9 +123,10 @@ const main = async () => {
       }
 
       // get the stoptimes file and edit it
+
       await writeFile(
         `${config.savepath}${agency.agency}/stop_times.txt`,
-        timeStringFixer(`${config.savepath}${agency.agency}/stop_times.txt`)
+        timeStringFixer(await readFile(`${config.savepath}${agency.agency}/stop_times.txt`))
       );
     } catch (e) {
       console.error(e);
